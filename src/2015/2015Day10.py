@@ -6,8 +6,8 @@ result = []
 for digit in str(start_val):
     result.append(int(digit))
 
-numTimes = 50
-for i in range(1, numTimes + 1):
+num_times = 50
+for i in range(1, num_times + 1):
     if i >= 50:
         print(f"Processing iteration {str(i)}")
     data = result
@@ -23,4 +23,4 @@ for i in range(1, numTimes + 1):
 print(len(result))
 
 end_time = time.perf_counter()
-print(f"{str(numTimes)} iterations took {str(round(end_time - start_time, 2))} seconds")
+print(f"{str(num_times)} iterations took {str(round(end_time - start_time, 2))} seconds")
