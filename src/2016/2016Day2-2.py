@@ -12,12 +12,12 @@ numpad = [
     ['', '', 'D', '', '']
 ]
 
-pos = [2, 0]
+curr_pos = [2, 0]
 def clamp(num: int, l_bound: int, u_bound: int) -> int:
     return max(l_bound, min(num, u_bound))
 
 
-def get_num(l: str):
+def get_num(l: str, pos: list):
     for letter in l:
         orig_pos = pos.copy()
         match letter:
@@ -26,13 +26,14 @@ def get_num(l: str):
             case "U": pos[0] -= 1
             case "D": pos[0] += 1
         for axis in range(2):
-            pos[axis] = clamp(pos[axis], 0, 5)
+            pos[axis] = clamp(pos[axis], 0, 4)
         if numpad[pos[0]][pos[1]] == '':
             pos = orig_pos.copy()
-    return numpad[pos[0]][pos[1]]
+    return numpad[pos[0]][pos[1]], pos
 
-# Clean up the naming (shadowing)
 result = ""
 for line in data:
-    result += get_num(line)
+    curr_result = get_num(line, curr_pos)
+    result += curr_result[0]
+    curr_pos = list(curr_result[1])
 print(result)
