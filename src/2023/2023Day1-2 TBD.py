@@ -27,7 +27,7 @@ def replace_first(s: str, target: str) -> str:
         return s
 
 def replace_last(s: str, target: str) -> str:
-    # to be implemented
+
     return ""
 
 for s in data:

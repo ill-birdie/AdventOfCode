@@ -10,9 +10,9 @@ data = data.split("\n")
 left = []
 right = []
 for pair in data:
-    left.append(int(pair[0:pair.index(" ")]))
-    pair = pair[pair.index(" "):].strip(" ")
-    right.append(int(pair))
+    pair = [int(num) for num in list(pair) if num != " "]
+    left.append(pair[0])
+    right.append(pair[1])
 
 right_count = Counter(right)
 result = 0
