@@ -12,9 +12,7 @@ def is_safe(line: str) -> bool:
     if line[0] > line[1]:
         is_decreasing = True
     for i in range(len(line) - 1):
-        if (line[i] > line[i + 1]) != is_decreasing:
-            return False
-        if not (1 <= abs(line[i] - line[i + 1]) <= 3):
+        if (line[i] > line[i + 1]) != is_decreasing or not (1 <= abs(line[i] - line[i + 1]) <= 3):
             return False
     return True
 
