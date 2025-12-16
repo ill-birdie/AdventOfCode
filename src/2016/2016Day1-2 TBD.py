@@ -1,4 +1,4 @@
-data = "R5, L5, R5, R3"
+data = "R1, R1, R1, R1"
 data = data.split(", ")
 
 locations = set()
@@ -32,9 +32,11 @@ for move in data:
         if str(curr_coord) not in locations:
             locations.add(str(curr_coord))
         else:
-            print(abs(curr_coord[0]) + abs(curr_coord[1]))
             found = True
             break
 
-if not found:
+print(locations)
+if found:
+    print(abs(curr_coord[0]) + abs(curr_coord[1]))
+else:
     print("Not found")

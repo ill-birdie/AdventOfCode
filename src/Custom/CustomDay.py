@@ -45,6 +45,8 @@ for move in data:
 
     for num_ration in range(int(move[1])):
         curr_coord[axis] += direction
+        if curr_coord == [0, 0, 0]:
+            continue
         if str(curr_coord) not in locations.keys():
             locations[str(curr_coord)] = 1
         else:
