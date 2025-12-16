@@ -6,8 +6,7 @@ data = """7 6 4 2 1
 1 3 6 7 9"""
 data = data.split('\n')
 
-def is_safe(line: str) -> bool:
-    line = [int(n) for n in line.split(' ')]
+def is_safe(line: list) -> bool:
     is_decreasing = False
     if line[0] > line[1]:
         is_decreasing = True
@@ -18,6 +17,7 @@ def is_safe(line: str) -> bool:
 
 result = 0
 for report in data:
+    report = [int(n) for n in report.split(' ')]
     if is_safe(report):
         result += 1
 print(result)
