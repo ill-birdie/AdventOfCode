@@ -1,5 +1,12 @@
 import random
 import time
+begin_time = time.perf_counter()
+
+def parse_data() -> str:
+    with open("C:/Users/soona/IdeaProjects/AdventOfCode/src/Custom/data.txt", "r") as data:
+        parsed = data.read()
+        return parsed
+
 
 def generate(num_times: int) -> str:
     output = """"""
@@ -10,20 +17,9 @@ def generate(num_times: int) -> str:
             output += "\n"
     return output
 
-data = """FORWARD 1
-BACKWARD 1
-FORWARD 1
-BACKWARD 1
-UP 2"""
-begin_time = time.perf_counter()
 
-data = data.split("\n")
-
-locations = {}
-curr_coord = [0, 0, 0]
-for move in data:
-    move = move.split(" ")
-    match move[0]:
+def get_movement(m: str) -> list:
+    match m[0]:
         case "RIGHT":
             axis = 0
             direction = 1
@@ -42,9 +38,21 @@ for move in data:
         case "BACKWARD":
             axis = 2
             direction = -1
+        case _:
+            axis = -1
+            direction = -1
+    return [axis, direction]
 
+data = parse_data()
+data = data.split("\n")
+
+locations = {}
+curr_coord = [0, 0, 0]
+for move in data:
+    move = move.split(" ")
+    vector_components = get_movement(move)
     for num_ration in range(int(move[1])):
-        curr_coord[axis] += direction
+        curr_coord[vector_components[0]] += vector_components[1]
         if curr_coord == [0, 0, 0]:
             continue
         if str(curr_coord) not in locations.keys():
