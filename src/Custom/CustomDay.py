@@ -28,10 +28,12 @@ def get_movement(m: list) -> list:
     :return: Returns the vector components of a move in the format of [axis, direction].
     Axis can be 0, 1, or 2 (x, y, z respectively).
     Direction can either be 1 or -1, representing the desired directional incrementation of the axis.
-    For instance: ["LEFT", 10] would modify the x-axis by subtracting 10, while ["RIGHT", 10] would add 10.
+    For instance: ["LEFT", 10] would modify the x-axis by decrementation, while ["RIGHT", 10] would increment.
     """
-    axis = -1
-    direction = -1
+    # Initial state of vector components.
+    # Assuming m is correctly formatted, both variables will be declared properly before the return statement.
+    axis = "Not Found"
+    direction = axis
     match m[0]:
         case "RIGHT":
             axis = 0
