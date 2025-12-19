@@ -2,9 +2,9 @@ import random
 import time
 begin_time = time.perf_counter()
 
-def parse_data() -> str:
-    with open("C:/Users/soona/IdeaProjects/AdventOfCode/src/Custom/data.txt", "r") as data:
-        parsed = data.read()
+def parse_file() -> str:
+    with open("C:/Users/soona/IdeaProjects/AdventOfCode/src/Custom/data.txt", "r") as file:
+        parsed = file.read()
         return parsed
 
 
@@ -18,7 +18,20 @@ def generate(num_times: int) -> str:
     return output
 
 
-def get_movement(m: str) -> list:
+def get_movement(m: list) -> list:
+    """
+    Returns a list containing the vector components of a given move (m).
+
+    :param m: A list representing the current movement. For instance: ["FORWARD", 10].
+    Other formats will result in logical errors.
+
+    :return: Returns the vector components of a move in the format of [axis, direction].
+    Axis can be 0, 1, or 2 (x, y, z respectively).
+    Direction can either be 1 or -1, representing the desired directional incrementation of the axis.
+    For instance: ["LEFT", 10] would modify the x-axis by subtracting 10, while ["RIGHT", 10] would add 10.
+    """
+    axis = -1
+    direction = -1
     match m[0]:
         case "RIGHT":
             axis = 0
@@ -38,12 +51,9 @@ def get_movement(m: str) -> list:
         case "BACKWARD":
             axis = 2
             direction = -1
-        case _:
-            axis = -1
-            direction = -1
     return [axis, direction]
 
-data = parse_data()
+data = parse_file()
 data = data.split("\n")
 
 locations = {}
