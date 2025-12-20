@@ -1,11 +1,7 @@
 import random
 import time
+from src.misc.starter_code import parse_file
 begin_time = time.perf_counter()
-
-def parse_file() -> str:
-    with open("C:/Users/soona/IdeaProjects/AdventOfCode/src/Custom/data.txt", "r") as file:
-        parsed = file.read()
-        return parsed
 
 
 def generate(num_times: int) -> str:
@@ -32,8 +28,7 @@ def get_movement(m: list) -> list:
     """
     # Initial state of vector components.
     # Assuming m is correctly formatted, both variables will be declared properly before the return statement.
-    axis = "Not Found"
-    direction = axis
+    axis = direction = "Not Found"
     match m[0]:
         case "RIGHT":
             axis = 0
