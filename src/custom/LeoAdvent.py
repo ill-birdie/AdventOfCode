@@ -1,25 +1,38 @@
-import time
+from src.misc.starter_code import parse_file
 
-def generate_sequence(n: int) -> list:
+def generate_sequence(n: int) -> dict[int, int]:
     """
-    Generates n digits of the Recamán sequence.
-    :param n: An integer representing the number of digits to generate.
-    :return: A list containing n digits of the Recamán sequence.
+    Generates digits of the Recamán sequence until n is reached.
+    :param n: An integer representing the digit at which to stop generating the sequence.
+    :return: A dictionary containing n digits of the Recamán sequence (key)
+    and their last appearance (value).
     """
-    sequence = []
+    seq = {}
     seen_nums = set()
     curr_num = 0
-    for i in range(1, n + 1):
+    j = 0
+    while curr_num != n:
         prev_num = curr_num
-        if curr_num - i > 0 and curr_num - i not in seen_nums:
-            curr_num -= i
+        if curr_num - j > 0 and curr_num - j not in seen_nums:
+            curr_num -= j
         else:
-            curr_num += i
-        sequence.append(prev_num)
+            curr_num += j
+        seq[curr_num] = j
         seen_nums.add(prev_num)
-    return sequence
+        j += 1
+    return seq
 
 
-start_time = time.perf_counter()
-print(generate_sequence(10000))
-print(f"Operation took {round(time.perf_counter() - start_time, 3)} seconds")
+data = parse_file()
+data = [int(n) for n in data.split('-')]
+
+test_num = 744
+sequence = generate_sequence(test_num)
+
+curr_result = data[0]
+for i in range(data[0], data[1] + 1):
+    if i not in sequence:
+        continue
+    if sequence[i] < sequence[curr_result]:
+        curr_result = i
+print(f"Between {data[0]}-{data[1]}, {curr_result} appears earliest in sequence at index {sequence[curr_result]}")
