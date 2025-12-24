@@ -26,7 +26,7 @@ def get_num(line: str) -> int:
             curr_pos[axis] = clamp(curr_pos[axis], -1, 1)
     return numpad[str(curr_pos)]
 
-num_combos = ""
+result = ""
 for line in data:
-    num_combos += str(get_num(line))
-print(num_combos)
+    result += str(get_num(line))
+print(result)

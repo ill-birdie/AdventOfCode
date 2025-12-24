@@ -7,10 +7,7 @@ data = data.split('\n')
 
 
 def parse_match(m) -> bool:
-    if m is None:
-        return False
-    else:
-        return True
+    return bool(m)
 
 
 def is_vowel(s: str) -> bool:
@@ -27,8 +24,8 @@ def num_vowels(s: str) -> int:
 
 
 def contains_double(s: str) -> bool:
-    for i in range(len(s) - 1):
-        if s[i] == s[i + 1]:
+    for next_idx, char in enumerate(s[:-1], start=1):
+        if char == s[next_idx]:
             return True
     return False
 
@@ -49,17 +46,11 @@ def contains_pair_twice(s: str) -> bool:
 
 
 def nice_part1(s: str) -> bool:
-    if num_vowels(s) >= 3 and contains_double(s) and not contains_naughty(s):
-        return True
-    else:
-        return False
+    return num_vowels(s) >= 3 and contains_double(s) and not contains_naughty(s)
 
 
 def nice_part2(s: str) -> bool:
-    if contains_sandwich(s) and contains_pair_twice(s):
-        return True
-    else:
-        return False
+    return contains_sandwich(s) and contains_pair_twice(s)
 
 
 part1_result = 0

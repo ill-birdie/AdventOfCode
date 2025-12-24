@@ -6,7 +6,7 @@ for digit in range(len(data) - 1):
 if data[-1] == data[0]:
     valid_nums.append(int(data[-1]))
     
-num_combos = 0
+result = 0
 for digit in valid_nums:
-    num_combos += digit
-print(num_combos)
+    result += digit
+print(result)

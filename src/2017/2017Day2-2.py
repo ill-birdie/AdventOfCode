@@ -23,14 +23,14 @@ def factors(num: int) -> list:
             fact.append(i)
     return fact
 
-num_combos = 0
+result = 0
 for line in data:
     checked = set()
     line = sorted([int(n) for n in line.split('\t')])
     for num in line:
         for factor in factors(num):
             if factor in checked:
-                num_combos += (num / factor)
+                result += (num / factor)
                 break
         checked.add(num)
-print(int(num_combos))
+print(int(result))

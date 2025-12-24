@@ -4,7 +4,7 @@ a1b2c3d4e5f
 treb7uchet"""
 data = data.split("\n")
 
-num_combos = 0
+result = 0
 for line in data:
     first_num = 0
     for letter in line:
@@ -16,5 +16,5 @@ for line in data:
         if line[i].isdigit():
             last_num = line[i]
             break
-    num_combos += int(first_num + last_num)
-print(num_combos)
+    result += int(first_num + last_num)
+print(result)

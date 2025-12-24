@@ -20,8 +20,8 @@ def round_result(opp: str, choice: str) -> int:
 data = parse_file()
 data = data.split('\n')
 
-num_combos = 0
+result = 0
 for line in data:
     line = line.split(' ')
-    num_combos += round_result(line[0], line[1])
-print(num_combos)
+    result += round_result(line[0], line[1])
+print(result)

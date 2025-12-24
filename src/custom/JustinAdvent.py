@@ -43,9 +43,9 @@ def get_rigged_nums(nums: list) -> list:
     return rigged
 
 rigged_nums = get_rigged_nums(data)
-num_combos = 1
+result = 1
 for n in rigged_nums:
-    num_combos *= n
+    result *= n
 
 print(f"""Rigged numbers: {rigged_nums}
-Product of rigged numbers (result): {num_combos}""")
+Product of rigged numbers (result): {result}""")

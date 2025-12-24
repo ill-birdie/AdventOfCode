@@ -16,11 +16,11 @@ def found(curr_line: str, curr_times: int) -> bool:
             return True
     return False
 
-num_combos = []
+result = []
 for times in range(2, 4):
     curr_count = 0
     for line in data:
         if found(line, times):
             curr_count += 1
-    num_combos.append(curr_count)
-print(num_combos[0] * num_combos[1])
+    result.append(curr_count)
+print(result[0] * result[1])

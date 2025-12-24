@@ -12,10 +12,10 @@ def is_invalid(num: int) -> bool:
     else:
         return True
 
-num_combos = 0
+result = 0
 for r in data:
     r = [int(bound) for bound in r.split('-')]
     for id in range(r[0], r[1] + 1):
         if is_invalid(id):
-            num_combos += id
-print(num_combos)
+            result += id
+print(result)
