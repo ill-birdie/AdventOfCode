@@ -31,9 +31,9 @@ def get_num(l: str, pos: list):
             pos = orig_pos.copy()
     return numpad[pos[0]][pos[1]], pos
 
-result = ""
+num_combos = ""
 for line in data:
     curr_result = get_num(line, curr_pos)
-    result += curr_result[0]
+    num_combos += curr_result[0]
     curr_pos = list(curr_result[1])
-print(result)
+print(num_combos)

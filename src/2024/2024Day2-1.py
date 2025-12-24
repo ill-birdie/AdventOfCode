@@ -15,9 +15,9 @@ def is_safe(line: list) -> bool:
             return False
     return True
 
-result = 0
+num_combos = 0
 for report in data:
     report = [int(n) for n in report.split(' ')]
     if is_safe(report):
-        result += 1
-print(result)
+        num_combos += 1
+print(num_combos)

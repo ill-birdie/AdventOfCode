@@ -2,25 +2,25 @@ import time
 start_time = time.perf_counter()
 
 start_val = 1113222113
-result = []
+num_combos = []
 for digit in str(start_val):
-    result.append(int(digit))
+    num_combos.append(int(digit))
 
 num_times = 50
 for i in range(1, num_times + 1):
     if i >= 50:
         print(f"Processing iteration {str(i)}")
-    data = result
-    result = []
+    data = num_combos
+    num_combos = []
     changes = [0]
     for num in range(len(data) - 1):
         if data[num] != data[num + 1]:
             changes.append(num + 1)
     changes.append(len(data))
     for num in range(len(changes) - 1):
-        result.append(changes[num + 1] - changes[num])
-        result.append(int(data[changes[num]]))
-print(len(result))
+        num_combos.append(changes[num + 1] - changes[num])
+        num_combos.append(int(data[changes[num]]))
+print(len(num_combos))
 
 end_time = time.perf_counter()
 print(f"{str(num_times)} iterations took {str(round(end_time - start_time, 2))} seconds")

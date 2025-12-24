@@ -5,7 +5,7 @@ for digit in range(len(data)):
     if data[digit] == data_cloned[digit + (len(data) // 2)]:
         valid_nums.append(int(data[digit]))
 
-result = 0
+num_combos = 0
 for num in valid_nums:
-    result += num
-print(result)
+    num_combos += num
+print(num_combos)

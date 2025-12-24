@@ -15,7 +15,7 @@ for pair in data:
     right.append(pair[1])
 
 right_count = Counter(right)
-result = 0
+num_combos = 0
 for num in range(len(left)):
-    result += left[num] * right_count[left[num]]
-print(result)
+    num_combos += left[num] * right_count[left[num]]
+print(num_combos)

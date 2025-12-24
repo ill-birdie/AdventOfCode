@@ -15,7 +15,7 @@ for i in range(3):
     largest_elf = max(elves)
     top_three_elves.append(largest_elf)
     elves.remove(largest_elf)
-result = 0
+num_combos = 0
 for elf in top_three_elves:
-    result += elf
-print(result)
+    num_combos += elf
+print(num_combos)

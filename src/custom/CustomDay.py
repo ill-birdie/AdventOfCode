@@ -68,11 +68,11 @@ for move in data:
             locations[str(curr_coord)] += 1
 
 most_rations = max(locations.values())
-result = 0
+num_combos = 0
 for num_ration in locations.values():
     if num_ration == most_rations:
-        result += num_ration
-print(result)
+        num_combos += num_ration
+print(num_combos)
 
 end_time = time.perf_counter()
 print(f"Operation took {round(end_time - begin_time, 3)} seconds")

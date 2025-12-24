@@ -14,10 +14,10 @@ for pair in data:
 left = sorted(left)
 right = sorted(right)
 
-result = 0
+num_combos = 0
 for num in range(len(left)):
     if left[num] > right[num]:
-        result += left[num] - right[num]
+        num_combos += left[num] - right[num]
     else:
-        result += right[num] - left[num]
-print(result)
+        num_combos += right[num] - left[num]
+print(num_combos)

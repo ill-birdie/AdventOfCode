@@ -19,17 +19,17 @@ def is_unsafe(line: list) -> int:
             return i
     return -1
 
-result = 0
+num_combos = 0
 for report in data:
     report = [int(n) for n in report.split(' ')]
     curr_return = is_unsafe(report)
     if curr_return == -1:
-        result += 1
+        num_combos += 1
     else:
         for i in range(2):
             report_temp = report.copy()
             report_temp.pop(curr_return + i)
             if is_unsafe(report_temp) == -1:
-                result += 1
+                num_combos += 1
                 break
-print(result)
+print(num_combos)

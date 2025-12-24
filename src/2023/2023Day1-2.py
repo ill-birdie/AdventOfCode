@@ -36,7 +36,7 @@ def find_last(s: str) -> str:
                 return num_match[num]
     return ""
 
-result = 0
+num_combos = 0
 for line in data:
-    result += int(find_first(line) + find_last(line))
-print(result)
+    num_combos += int(find_first(line) + find_last(line))
+print(num_combos)
