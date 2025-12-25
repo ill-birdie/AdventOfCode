@@ -1,16 +1,4 @@
-data = """3-5
-10-14
-16-20
-12-18
-
-1
-5
-8
-11
-17
-32"""
-data = data.split("\n")
-data = data[:data.index("")]
+from src.misc.starter_code import parse_file
 
 
 def merge_ranges(r1: str, r2: str) -> str:
@@ -47,12 +35,30 @@ def sort_data(arr: list) -> list:
     return sorted_arr
 
 
-sorted_data = sort_data(data)
-merged_data = []
-i = 0
-while i < len(data) - 1:
-    print(sorted_data[i], sorted_data[i + 1])
-    curr_range = merge_ranges(sorted_data[i], sorted_data[i + 1])
-    i += 1
-print(merged_data)
+data = parse_file()
+data = data.split('\n')
 
+ranges = data[:data.index("")]
+ranges = sort_data(ranges)
+merged_ranges = []
+# check if merged_data returns an empty string (didn't merge anything) and increment the loop variable if so (otherwise don't)
+for prev, curr in zip(ranges, ranges[1:]):
+    curr_merged = merge_ranges(prev, curr)
+    print(curr_merged)
+    merged_ranges.append(curr_merged)
+print(merged_ranges)
+
+ids = data[data.index("") + 1:]
+ids = [int(n) for n in ids]
+
+
+part1_answer = 0
+for i in ids:
+    for r in ranges:
+        r = r.split("-")
+        r = [int(n) for n in r]
+        if r[0] <= i <= r[1]:
+            part1_answer += 1
+            break
+print(f"""Part one answer: {part1_answer}
+Part two answer: """)
