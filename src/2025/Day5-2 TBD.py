@@ -12,6 +12,7 @@ data = """3-5
 data = data.split("\n")
 data = data[:data.index("")]
 
+
 def merge_ranges(r1: str, r2: str) -> str:
     r1 = [int(bound) for bound in r1.split("-")]
     r2 = [int(bound) for bound in r2.split("-")]
@@ -33,6 +34,7 @@ def merge_ranges(r1: str, r2: str) -> str:
         merged_str = f"{merged[0]}-{r2[1]}"
     return merged_str
 
+
 def sort_data(arr: list) -> list:
     data_dict = {}
     for r in arr:
@@ -43,6 +45,7 @@ def sort_data(arr: list) -> list:
     for bound in lower_bounds:
         sorted_arr.append(f"{bound}-{data_dict[bound]}")
     return sorted_arr
+
 
 sorted_data = sort_data(data)
 merged_data = []
