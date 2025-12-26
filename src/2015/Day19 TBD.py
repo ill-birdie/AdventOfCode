@@ -9,9 +9,11 @@ molecule = data[newline_idx + 1]
 data = data[:newline_idx]
 
 conversions = defaultdict(list)
+decompositions = defaultdict(list)
 for line in data:
     line = line.split(' ')
     conversions[line[0]].append(line[-1])
+    decompositions[line[-1]].append(line[0])
 
 seen_molecules = set()
 for k in conversions:
