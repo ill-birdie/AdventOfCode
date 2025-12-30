@@ -37,11 +37,20 @@ class Solution:
     def __getitem__(self, key):
         return self._virtual_stack[key]
 
+    @property
+    def instructions(self):
+        return self._instructions
+
+    @instructions.setter
+    def instructions(self, new_inst):
+        self._instructions = new_inst
 
     @property
     def virtual_stack(self):
         return self._virtual_stack
 
+    def clear_stack(self):
+        self._virtual_stack = {}
 
     def operand_int(self, operand) -> int:
         new_operand: int
@@ -92,16 +101,18 @@ class Solution:
 data = parse_file()
 data = data.split('\n')
 
-part1 = Solution(data)
-part1.execute()
-part1_answer = part1['a']
+foo = Solution(data)
+foo.execute()
+part1_answer = foo['a']
 
-part2_data = data.copy()
-part2_data = [line for line in part2_data if not bool(re.search('-> b$', line))]
-part2 = Solution(part2_data)
-part2.virtual_stack['b'] = part1_answer
-part2.execute()
-part2_answer = part2['a']
+initializing_b = lambda s : bool(re.search('-> b$', s))
+part2_data = [line for line in data if not initializing_b(line)]
+
+foo.clear_stack()
+foo.virtual_stack['b'] = part1_answer
+foo.instructions = part2_data
+foo.execute()
+part2_answer = foo['a']
 
 print(f"""Part one answer: {part1_answer}
 Part two answer: {part2_answer}""")
