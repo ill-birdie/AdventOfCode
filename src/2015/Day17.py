@@ -1,13 +1,22 @@
 from src.misc.starter_code import parse_file
 
 class Solution:
-    combinations = 0
-    depth = 1
-    combination_lengths = []
-
-    # Empty constructor
     def __init__(self):
-        pass
+        self._combinations = 0
+        self._combination_lengths = []
+        self._depth = 1
+
+    @property
+    def combinations(self):
+        return self._combinations
+
+    @property
+    def combination_lengths(self):
+        return self._combination_lengths
+
+    @property
+    def depth(self):
+        return self._depth
 
     def eval_combos(self, target: int, containers: list) -> None:
         """
@@ -19,12 +28,12 @@ class Solution:
         for idx, container in enumerate(containers):
             curr_diff = target - container
             if curr_diff == 0:
-                self.combinations += 1
-                self.combination_lengths.append(self.depth)
+                self._combinations += 1
+                self._combination_lengths.append(self.depth)
             elif curr_diff > 0:
-                self.depth += 1
+                self._depth += 1
                 self.eval_combos(curr_diff, containers[idx + 1:])
-        self.depth -= 1
+        self._depth -= 1
 
 data = sorted(parse_file().split('\n'), key=int, reverse=True)
 data = [int(n) for n in data]
