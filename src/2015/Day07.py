@@ -1,5 +1,6 @@
 from src.misc.starter_code import parse_file
 import re
+import operator
 
 def wrap(n: int) -> int:
     """
@@ -13,6 +14,19 @@ def wrap(n: int) -> int:
     elif n > wrap_const:
         n -= wrap_const
     return n
+
+
+def apply_operator(oper: str, num1: int, num2=None) -> int:
+    if num2 is not None:
+        operations = {
+            'AND': operator.and_(num1, num2),
+            'OR': operator.or_(num1, num2),
+            'LSHIFT': operator.lshift(num1, num2),
+            'RSHIFT': operator.rshift(num1, num2)
+        }
+        return operations[oper]
+    else:
+        return ~num1
 
 
 class Solution:
@@ -30,56 +44,49 @@ class Solution:
 
 
     def operand_int(self, operand) -> int:
-        new_operator: int
+        new_operand: int
         if operand in self._virtual_stack:
-            new_operator = self._virtual_stack[operand]
+            new_operand = self._virtual_stack[operand]
         elif operand.isdigit():
-            new_operator = operand
+            new_operand = operand
         else:
-            new_operator = -1
-        return int(new_operator)
+            return -1
+        return int(new_operand)
 
 
     def execute(self) -> None:
         checked_indices = set()
-        while len(checked_indices) < len(data):
+        while len(checked_indices) < len(self._instructions):
             checked_indices = set()
-            for idx, line in enumerate(data):
+            for idx, line in enumerate(self._instructions):
                 line = line.split(' -> ')
                 left_side = line[0]
                 init_var = line[1]
                 parsed_left = left_side.split(' ')
 
-                curr_result = -1
+                result = -1
                 match len(parsed_left):
                     # Initialize a new variable
                     case 1:
-                        curr_result = self.operand_int(left_side)
+                        result = self.operand_int(left_side)
 
                     # Bitwise NOT operator
                     case 2:
-                        operand = parsed_left[1]
-                        if operand in self._virtual_stack:
-                            var = self._virtual_stack[operand]
-                            curr_result = wrap(~var)
+                        operand = self.operand_int(parsed_left[-1])
+                        if operand != -1:
+                            result = apply_operator('NOT', operand)
+                            result = wrap(result)
 
                     # Other bitwise operators
                     case 3:
-                        operator = parsed_left[1]
+                        operation = parsed_left[1]
                         operand1 = self.operand_int(parsed_left[0])
                         operand2 = self.operand_int(parsed_left[-1])
                         if operand1 != -1 and operand2 != -1:
-                            match operator:
-                                case 'AND':
-                                    curr_result = operand1 & operand2
-                                case 'OR':
-                                    curr_result = operand1 | operand2
-                                case 'LSHIFT':
-                                    curr_result = operand1 << operand2
-                                case 'RSHIFT':
-                                    curr_result = operand1 >> operand2
-                if curr_result != -1:
-                    self._virtual_stack[init_var] = curr_result
+                            result = apply_operator(operation, operand1, operand2)
+
+                if result != -1:
+                    self._virtual_stack[init_var] = result
                     checked_indices.add(idx)
 
 data = parse_file()
@@ -93,14 +100,7 @@ part2_data = data.copy()
 part2_data = [line for line in part2_data if not bool(re.search('-> b$', line))]
 part2 = Solution(part2_data)
 part2.virtual_stack['b'] = part1_answer
-
-"""
-for some reason this step evaluates b to the same thing as part a,
-even though i removed the line that initializes b. im not sure why, 
-but i'll definitely work on it tomorrow.
-"""
 part2.execute()
-print(part2['b'])
 part2_answer = part2['a']
 
 print(f"""Part one answer: {part1_answer}
