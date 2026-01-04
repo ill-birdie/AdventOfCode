@@ -1,5 +1,4 @@
-data = """2x3x4"""
-data = data.split('\n')
+from src.misc.starter_code import parse_file
 
 
 def get_paper_needed(dimensions: list) -> int:
@@ -9,13 +8,9 @@ def get_paper_needed(dimensions: list) -> int:
     :return: the amount of paper needed to wrap a given box
     """
     paper_needed = 0
-    for i in range(len(dimensions)):
-        for j in range(i + 1, len(dimensions)):
-            multi = 2
-            # Smallest side
-            if i == 0 and j == 1:
-                multi = 3
-            paper_needed += multi * (dimensions[i] * dimensions[j])
+    paper_needed += 3 * (dimensions[0] * dimensions[1])
+    paper_needed += 2 * (dimensions[0] * dimensions[2])
+    paper_needed += 2 * (dimensions[1] * dimensions[2])
     return paper_needed
 
 
@@ -25,18 +20,21 @@ def get_ribbon_needed(dimensions: list) -> int:
     :param dimensions: a list of dimensions of a given box
     :return: the amount of ribbon needed to wrap a given box
     """
-    smallest_perimeter = (dimensions[0] * 2) + (dimensions[1] * 2)
-    bow = 1
+    smallest_perimeter = 2 * (dimensions[0] + dimensions[1])
+    ribbon = 1
     for side in dimensions:
-        bow *= side
-    return smallest_perimeter + bow
+        ribbon *= side
+    return smallest_perimeter + ribbon
 
 
-paper_amount = 0
-ribbon_amount = 0
+data = parse_file().split('\n')
+
+part1_answer = 0
+part2_answer = 0
 for line in data:
     line = sorted([int(side) for side in line.split('x')])
-    paper_amount += get_paper_needed(line)
-    ribbon_amount += get_ribbon_needed(line)
-print(f"""Total square feet of wrapping paper: {paper_amount}
-Total feet of ribbon: {ribbon_amount}""")
+    part1_answer += get_paper_needed(line)
+    part2_answer += get_ribbon_needed(line)
+
+print(f"""Part one answer: {part1_answer}
+Part two answer: {part2_answer}""")
