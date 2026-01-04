@@ -2,32 +2,14 @@ import re
 from src.misc.starter_code import parse_file
 
 
-data = parse_file()
-data = data.split('\n')
-
-
-def parse_match(m) -> bool:
-    return bool(m)
-
-
-def is_vowel(s: str) -> bool:
-    match = re.search(r"[aeiou]", s)
-    return bool(match)
-
-
 def num_vowels(s: str) -> int:
-    count = 0
-    for letter in s:
-        if is_vowel(letter):
-            count += 1
-    return count
+    vowels = re.findall(r'[aeiou]', s)
+    return len(vowels)
 
 
-def contains_double(s: str) -> bool:
-    for next_idx, char in enumerate(s[:-1], start=1):
-        if char == s[next_idx]:
-            return True
-    return False
+def contains_pair(s: str) -> bool:
+    match = re.search(r'(.)\1', s)
+    return bool(match)
 
 
 def contains_naughty(s: str) -> bool:
@@ -46,12 +28,13 @@ def contains_pair_twice(s: str) -> bool:
 
 
 def nice_part1(s: str) -> bool:
-    return num_vowels(s) >= 3 and contains_double(s) and not contains_naughty(s)
-
+    return num_vowels(s) >= 3 and contains_pair(s) and not contains_naughty(s)
 
 def nice_part2(s: str) -> bool:
     return contains_sandwich(s) and contains_pair_twice(s)
 
+data = parse_file()
+data = data.split('\n')
 
 part1_result = 0
 part2_result = 0
