@@ -28,7 +28,7 @@ def num_lights(grid: List[List[str]]) -> int:
 
 
 def simulate_step(grid: List[List[str]]) -> List[List[str]]:
-    after_step = []
+    new_grid = []
     for line in range(len(grid)):
         new_line = []
         for coord, char in enumerate(grid):
@@ -36,18 +36,32 @@ def simulate_step(grid: List[List[str]]) -> List[List[str]]:
                 new_line.append('#')
             else:
                 new_line.append('.')
-        after_step.append(new_line)
-    return after_step
+        new_grid.append(new_line)
+    return new_grid
+
+
+def activate_corners(grid: List[List[str]]) -> List[List[str]]:
+    new_grid = grid
+    corners = [[0, 0], [-1, 0], [0, -1], [-1, -1]]
+    for c in corners:
+        row = c[0]
+        column = c[1]
+        new_grid[row][column] = '#'
+    return new_grid
 
 
 data = parse_file()
 data = data.split('\n')
 data = [list(line) for line in data]
 
-result = data.copy()
+part1_grid = data.copy()
+part2_grid = activate_corners(data.copy())
+
 for steps in range(100):
-    result = simulate_step(result)
-part1_answer = num_lights(result)
+    part1_grid = simulate_step(part1_grid)
+    part2_grid = activate_corners(simulate_step(part2_grid))
+part1_answer = num_lights(part1_grid)
+part2_answer = num_lights(part2_grid)
 
 print(f"""Part one answer: {part1_answer}
-Part two answer: """)
+Part two answer: {part2_answer}""")
