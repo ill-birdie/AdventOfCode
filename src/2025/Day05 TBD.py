@@ -38,15 +38,16 @@ def sort_data(arr: list) -> list:
 data = parse_file()
 data = data.split('\n')
 
-ranges = data[:data.index("")]
+ranges = data[:data.index("")].copy()
 ranges = sort_data(ranges)
-merged_ranges = []
 # check if merged_data returns an empty string (didn't merge anything) and increment the loop variable if so (otherwise don't)
-for prev, curr in zip(ranges, ranges[1:]):
-    curr_merged = merge_ranges(prev, curr)
-    print(curr_merged)
-    merged_ranges.append(curr_merged)
-print(merged_ranges)
+idx = 0
+while idx < len(ranges):
+    curr_merged = merge_ranges(ranges[idx], ranges[idx + 1])
+    if curr_merged != '':
+        print('hi')
+
+print(ranges)
 
 ids = data[data.index("") + 1:]
 ids = [int(n) for n in ids]
