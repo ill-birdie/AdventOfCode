@@ -23,12 +23,28 @@ data = parse_file().split('\n')
 data = [list(l) for l in data]
 
 part1_answer = 0
-for line_idx, line in enumerate(data):
-    for char_idx, char in enumerate(line):
-        if accessible(data, line_idx, char_idx):
-            part1_answer += 1
+part2_answer = 0
 
-removable_data = data.copy()
+accessed = []
+can_remove = True
+while can_remove:
+    for line_idx, line in enumerate(data):
+        for char_idx in range(len(line)):
+            if accessible(data, line_idx, char_idx):
+                part2_answer += 1
+                accessed.append([line_idx, char_idx])
+
+    if part1_answer == 0:
+        part1_answer = part2_answer
+
+    if len(accessed) > 0:
+        for coord in accessed:
+            l_idx = coord[0]
+            c_idx = coord[1]
+            data[l_idx][c_idx] = '.'
+        accessed = []
+    else:
+        can_remove = False
 
 print(f"""Part one answer: {part1_answer}
-Part two answer: {0}""")
+Part two answer: {part2_answer}""")
