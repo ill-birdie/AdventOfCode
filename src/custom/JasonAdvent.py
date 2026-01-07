@@ -1,4 +1,4 @@
-from src.misc.starter_code import parse_file
+from src.starter_code import parse_file
 
 month_days = {}
 for month in range(1, 13):

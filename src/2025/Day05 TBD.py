@@ -1,4 +1,4 @@
-from src.misc.starter_code import parse_file
+from src.starter_code import parse_file
 
 
 def merge_ranges(r1: str, r2: str) -> str:

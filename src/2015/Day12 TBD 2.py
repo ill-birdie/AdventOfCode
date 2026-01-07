@@ -1,13 +1,18 @@
-from src.misc.starter_code import parse_file
+from src.starter_code import parse_file
 
 
 class Solution:
     def __init__(self):
         self._depth = 0
+        self._depth_validity = {}
 
     @property
     def depth(self):
-        return self.depth
+        return self._depth
+
+    @property
+    def depth_validity(self):
+        return self._depth_validity
 
     @staticmethod
     def sum_all(d: str) -> int:
@@ -30,18 +35,22 @@ class Solution:
             case ']' | '}': self._depth -= 1
 
 
-    def contains_red(self, d: str) -> bool:
+    def check_layer(self, d: str) -> None:
         """
-        Searches the current depth for an instance of 'R'.
+        Searches the current depth for an instance of 'R' if in an object ({}).
         :param d: A string representing a nested object.
         :return: A boolean representing whether 'R' exists in the depth it began.
         """
+        depth_result = True
         curr_depth = self._depth
-        for char in d[1:-1]:
+        for idx, char in enumerate(d[1:-1]):
+            print(char)
             self.change_depth(char)
+            if char in {'[', '{'}:
+                self.check_layer(d[idx])
             if curr_depth == self._depth and char == 'R':
-                return True
-        return False
+                depth_result = False
+        self._depth_validity[self._depth] = depth_result
 
 
 data = parse_file()
@@ -52,7 +61,8 @@ answers = foo
 part1_answer = 0
 part2_answer = 0
 
-print(foo.contains_red(data))
+foo.check_layer(data)
+print(foo.depth_validity)
 
 print(f"""Part one answer: {part1_answer}
 Part two answer: {part2_answer}""")
