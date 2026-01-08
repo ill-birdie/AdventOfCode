@@ -23,12 +23,13 @@ def year_valid(y: int) -> bool:
     return y in range(2000, 2100 + 1)
 
 
-data = parse_file().split('/')
-data = [int(n) for n in data]
-
+data = parse_file().split('\n')
 
 result = 0
-for month, day, year in zip(data, data[1:], data[2:]):
-    if day_valid(month, day) and year_valid(year):
-        result += (month + day + year)
+for line in data:
+    line = line.strip('/').split('/')
+    line = [int(n) for n in line]
+    for month, day, year in zip(line, line[1:], line[2:]):
+        if day_valid(month, day) and year_valid(year):
+            result += (month + day + year)
 print(result)
