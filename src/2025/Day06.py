@@ -38,25 +38,37 @@ def init_grid2(grid: list) -> List[List[int]]:
             longest_len = curr_len
         curr_len = len(l)
 
-    """
-    Iterate through each column of the list longest_len times.
-    Each column joined will be a number.
-    Have a list to store the current operation.
-    Have a string to store the current number (column).
-    If the bottom row is an operation, append the list to the grid.
-    Otherwise, append the current number to the operation list.
-    
-    This should separate each operation based on if there's a new operation in the bottom row.
-    """
-
+    operation_list = []
+    oper = ''
+    for col_idx in range(longest_len + 1):
+        num = ''
+        for row_idx, row in enumerate(grid[:-1]):
+            if col_idx < len(row):
+                num += row[col_idx]
+            else:
+                num += ' '
+        if col_idx < len(grid[-1]):
+            potential_oper = grid[-1][col_idx]
+            if potential_oper != ' ':
+                oper = potential_oper
+        num = num.strip()
+        if num.isdigit():
+            operation_list.append(num)
+        else:
+            operation_list.append(oper)
+            new_grid.append(operation_list)
+            operation_list = []
+    return new_grid
 
 data = parse_file().split('\n')
 part1_grid = init_grid1(data)
 part2_grid = init_grid2(data)
 
 part1_answer = 0
-for line in part1_grid:
-    part1_answer += list_answer(line)
+part2_answer = 0
+for part1_line, part2_line in zip(part1_grid, part2_grid):
+    part1_answer += list_answer(part1_line)
+    part2_answer += list_answer(part2_line)
 
 print(f"""Part one answer: {part1_answer}
-Part two answer: """)
+Part two answer: {part2_answer}""")
