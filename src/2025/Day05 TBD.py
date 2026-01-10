@@ -1,9 +1,13 @@
 from src.starter_code import parse_file
 
 
+def bounds(r: str) -> list:
+    return [int(bound) for bound in r.split('-')]
+
+
 def merge_ranges(r1: str, r2: str) -> str:
-    r1 = [int(bound) for bound in r1.split("-")]
-    r2 = [int(bound) for bound in r2.split("-")]
+    r1 = bounds(r1)
+    r2 = bounds(r2)
 
     if r2[0] < r1[0]:
         temp = r1
@@ -23,43 +27,63 @@ def merge_ranges(r1: str, r2: str) -> str:
     return merged_str
 
 
-def sort_data(arr: list) -> list:
+def sort_data(range_list: list) -> list:
     data_dict = {}
-    for r in arr:
-        r = r.split('-')
+    for r in range_list:
+        r = bounds(r)
         data_dict[r[0]] = r[1]
     lower_bounds = sorted(data_dict.keys(), key=int)
-    sorted_arr = []
+    sorted_ranges = []
     for bound in lower_bounds:
-        sorted_arr.append(f"{bound}-{data_dict[bound]}")
-    return sorted_arr
+        sorted_ranges.append(f"{bound}-{data_dict[bound]}")
+    return sorted_ranges
+
+
+def merge_all(range_list: list) -> list:
+    range_list = sort_data(range_list)
+    idx = 0
+    while idx < len(range_list) - 1:
+        curr_range = range_list[idx]
+        next_range = range_list[idx + 1]
+        curr_merged = merge_ranges(curr_range, next_range)
+        if curr_merged != '':
+            range_list.pop(idx)
+            range_list.pop(idx)
+            range_list.insert(idx, curr_merged)
+        else:
+            idx += 1
+    return range_list
+
+
+def valid_ids(range_list: list, id_list) -> int:
+    num_valid = 0
+    for i in id_list:
+        for r in range_list:
+            r = bounds(r)
+            if r[0] <= i <= r[1]:
+                num_valid += 1
+    return num_valid
+
+
+def num_fresh(range_list: list) -> int:
+    fresh = 0
+    for r in range_list:
+        r = bounds(r)
+        fresh += (r[1] - r[0]) + 1
+    return fresh
 
 
 data = parse_file()
 data = data.split('\n')
 
 ranges = data[:data.index("")].copy()
-ranges = sort_data(ranges)
-# check if merged_data returns an empty string (didn't merge anything) and increment the loop variable if so (otherwise don't)
-idx = 0
-while idx < len(ranges):
-    curr_merged = merge_ranges(ranges[idx], ranges[idx + 1])
-    if curr_merged != '':
-        print('hi')
-
-print(ranges)
+ranges = merge_all(ranges)
 
 ids = data[data.index("") + 1:]
 ids = [int(n) for n in ids]
 
+part1_answer = valid_ids(ranges, ids)
+part2_answer = num_fresh(ranges)
 
-part1_answer = 0
-for i in ids:
-    for r in ranges:
-        r = r.split("-")
-        r = [int(n) for n in r]
-        if r[0] <= i <= r[1]:
-            part1_answer += 1
-            break
 print(f"""Part one answer: {part1_answer}
-Part two answer: """)
+Part two answer: {part2_answer}""")
