@@ -31,7 +31,10 @@ def sort_data(range_list: list) -> list:
     data_dict = {}
     for r in range_list:
         r = bounds(r)
-        data_dict[r[0]] = r[1]
+        lower_bound = r[0]
+        upper_bound = r[1]
+        if (data_dict.get(lower_bound) is None) or (data_dict.get(lower_bound) < upper_bound):
+            data_dict[r[0]] = r[1]
     lower_bounds = sorted(data_dict.keys(), key=int)
     sorted_ranges = []
     for bound in lower_bounds:
